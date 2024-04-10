@@ -1,10 +1,10 @@
 import { CDN_URL } from "../utils.js/constants";
 
 const ResCard = (props) => {
+
   const { resData } = props;
 
-
-  const { cloudinaryImageId, name, cuisines, avgRating, costForTwo, deliveryTime } = resData?.info
+  const { cloudinaryImageId, name, cuisines, avgRating, costForTwo, sla } = resData;
 
   return (
     <div className="res-card" style={{ backgroundColor: "#f0f0f0" }}>
@@ -16,7 +16,7 @@ const ResCard = (props) => {
       <h4>{cuisines.join(", ")}</h4>
       <h4>{avgRating}</h4>
       <h4>{costForTwo}</h4>
-      <h4>{deliveryTime}</h4>
+      <h4>{sla.slaString}</h4>
     </div>
   )
 }

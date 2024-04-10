@@ -65,13 +65,13 @@ const Body = () => {
       (
         <div className="body">
 
-          <div className="buttons-btn">
+          <div className="flex justify-between">
 
             <div className="search-res">
-              <input type="text" className="search-text" value={searchText} onChange={(e) => {
+              <input type="text" className="border border-black m-4 h-7 rounded-sm text-sm" value={searchText} onChange={(e) => {
                 setsearchText(e.target.value);
               }} />
-              <button className="search-btn" onClick={() => {
+              <button className="px-5 ml-0.5 py-1 bg-slate-400 m-4 h-7 rounded-sm shadow-sm text-sm" onClick={() => {
                 const filteredRestaurant = ListOfRestaurants.filter((res) =>
                   res.info.name.toLowerCase().includes(searchText.toLowerCase())
                 );
@@ -80,7 +80,7 @@ const Body = () => {
               }}>Search</button>
             </div>
 
-            <div className="filter">
+            <div className="filter px-5 py-1 bg-slate-400 m-4 h-7 rounded-sm shadow-sm text-sm ">
               <button className="filter-btn" onClick={() => {
                 const filteredlist = ListOfRestaurants.filter(
                   (res) => res.info.avgRating > 4.2
@@ -93,7 +93,7 @@ const Body = () => {
             </div>
 
           </div>
-          <div className="res-container">
+          <div className="flex flex-wrap">
             {
               filteredRestaurant.map((restaurant) => (
                 <Link key={restaurant.info.id}

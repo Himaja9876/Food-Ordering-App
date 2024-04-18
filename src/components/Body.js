@@ -1,4 +1,4 @@
-import ResCard from "./ResCard";
+import ResCard, { WithOfferLabel } from "./ResCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -9,6 +9,8 @@ const Body = () => {
   const [ListOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurant, setfliteredRestaurant] = useState([]);
 
+  const RestaurantCardPromoted = WithOfferLabel(ResCard);
+
   const [searchText, setsearchText] = useState("");
 
   useEffect(() => {
@@ -16,42 +18,22 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    try {
+      const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
 
-    const json = await data.json();
-    setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setfliteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      if (!data.ok) {
+        throw new Error("Failed to fetch data");
+      }
 
+      const json = await data.json();
+      setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      setfliteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    } catch (error) {
+      // Handle the error gracefully
+      console.error("Error fetching data:", error);
+      // Optionally, you can set an error state here to display an error message to the user
+    }
   };
-
-  {/*const latitude = 12.9351929;
-  const longitude = 77.62448069999999;
-
-  const requestData = {
-    lat: latitude,
-    lng: longitude,
-  };
-
-  const postData = async (url = "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/update", data = {}) => {
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify(data),
-    });
-    return response.json();
-  }
-
-  postData("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/update", requestData).then((data) => {
-    console.log(data);
-  }); */}
 
   const onlineStatus = useOnlineStatus();
 
@@ -98,13 +80,14 @@ const Body = () => {
               filteredRestaurant.map((restaurant) => (
                 <Link key={restaurant.info.id}
                   to={"/restaurants/" + restaurant.info.id} >
-                  <ResCard resData={restaurant?.info} /></Link>)
-              )
+                  {restaurant.info.aggregatedDiscountInfoV3?.header ? (< RestaurantCardPromoted resData={restaurant?.info} />) : (<ResCard resData={restaurant?.info} />)}
+                </Link>
+              ))
             }
           </div>
         </div >
       )
-  }
-}
+  };
+};
 
 export default Body;

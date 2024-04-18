@@ -9,10 +9,10 @@ const Header = () => {
 
   const [btnName, setbtnName] = useState("Login");
   return (
-    <div className="flex justify-between m-1 bg-pink-50 shadow-xl">
+    <div className="flex justify-between m-1 shadow-xl" style={{ backgroundColor: 'rgb(224, 216, 120)' }}>
 
       <div className="logo-container">
-        <img className="w-20 m-5" src={LOGO_URL}></img>
+        <img className="m-5 mt-7" src={LOGO_URL} style={{ width: "140px", height: "90px" }}></img>
       </div>
 
       <div className="nav-links">

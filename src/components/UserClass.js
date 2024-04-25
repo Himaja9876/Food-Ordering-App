@@ -16,7 +16,7 @@ class UserClass extends React.Component {
 
   async componentDidMount() {
 
-    console.log(this.props.name + "Child componentDidMount");
+    // console.log(this.props.name + "Child componentDidMount");
 
     const data = await fetch("https://api.github.com/users/akshaymarch7");
     const json = await data.json();
@@ -24,21 +24,21 @@ class UserClass extends React.Component {
     this.setState({
       userInfo: json,
     });
-    console.log(json);
+    // console.log(json);
 
   }
 
   componentDidUpdate() {
-    console.log("Component Did Update")
+    // console.log("Component Did Update")
   }
 
   componentWillUnmount() {
-    console.log("component is unmounted")
+    // console.log("component is unmounted")
   }
 
   render() {
     const { name, location } = this.state.userInfo;
-    console.log(this.props.name + "Child render");
+    // console.log(this.props.name + "Child render");
     return (
       <div>
         <h3>Name: {name}</h3>

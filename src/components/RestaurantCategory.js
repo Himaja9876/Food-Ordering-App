@@ -2,11 +2,10 @@ import CategoryList from "./CategoryList";
 import { useState } from "react";
 
 const RestaurantCategory = (props) => {
-  const { categoryData } = props;
-  const [ShowItems, setShowItems] = useState(false);
+  const { categoryData, ShowItems, setShowIndex } = props;
 
   const showAllItems = () => {
-    setShowItems(!ShowItems);
+    setShowIndex();
   }
   //console.log(categoryData);
   return (

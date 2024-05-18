@@ -1,8 +1,9 @@
 import ResCard, { WithOfferLabel } from "./ResCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils.js/useOnlineStatus";
+import UserContext from "../utils.js/UserContext";
 
 const Body = () => {
   // Local State Variable - super powerful variable
@@ -37,6 +38,8 @@ const Body = () => {
 
   const onlineStatus = useOnlineStatus();
 
+  const { setUserName, loggedInUser } = useContext(UserContext);
+
   if (onlineStatus === false) {
     return (
       <h1>You are offline, please check your internet connection.</h1>
@@ -60,6 +63,14 @@ const Body = () => {
 
                 setfliteredRestaurant(filteredRestaurant);
               }}>Search</button>
+            </div>
+
+            <div>
+              <label>UserName:</label>
+              <input type="text" className="border border-black m-4 h-7 rounded-sm text-sm"
+                value={loggedInUser}
+                onChange={(e) => setUserName(e.target.value)}
+              />
             </div>
 
             <div className="filter px-5 py-1 bg-slate-400 m-4 h-7 rounded-sm shadow-sm text-sm ">
